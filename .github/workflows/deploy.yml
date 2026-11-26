@@ -1,0 +1,49 @@
+# 홈페이지 자동 배포: main 브랜치에 올리면 바로 배포됩니다.
+name: 홈페이지 배포
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment_retry.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 공개할 파일만 모으기
+        run: |
+          mkdir _site
+          cp -r index.html style.css script.js office.js CNAME robots.txt sitemap.xml privacy _site/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      # 가끔 생기는 일시 오류에 대비해 실패하면 잠시 후 한 번 더 시도합니다.
+      - id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: 잠시 대기 후 재시도 준비
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 30
+
+      - id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4

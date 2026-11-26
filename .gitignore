@@ -1,0 +1,10 @@
+# 로컬 설정
+.claude/
+
+# 참고용 사이트 화면 PDF — 올리지 않음
+*.pdf
+
+# 기타
+*.log
+.DS_Store
+Thumbs.db
