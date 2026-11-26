@@ -27,7 +27,7 @@ jobs:
       - name: 공개할 파일만 모으기
         run: |
           mkdir _site
-          cp -r index.html style.css script.js office.js CNAME robots.txt sitemap.xml privacy _site/
+          cp -r index.html style.css script.js office.js CNAME robots.txt sitemap.xml llms.txt privacy _site/
 
       - uses: actions/configure-pages@v5
 
