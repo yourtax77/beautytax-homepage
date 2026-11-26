@@ -6,7 +6,8 @@ window.OFFICE = {
   domain: 'beauti-tax.com',
   name: '세무법인대교 WM & Consulting',
   ceo: '조근열',
-  phone: '02-6949-0252',
+  phone: '02-6949-0252',          // 사무소 대표전화 (개인정보 보호책임자 연락처)
+  consultPhone: '010-4749-1017',  // 전화 상담 번호 (전화 상담 버튼·안내 문구)
   address: '서울 영등포구 양평로21길 26, 14층 1401호',
   bizNo: '279-85-01960',
   blog: '',
